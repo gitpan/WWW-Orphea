@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.2 2004/04/05 13:57:31 guillaume Exp $
+# $Id: Makefile.PL,v 1.3 2004/04/08 08:00:02 guillaume Exp $
 
 use ExtUtils::MakeMaker;
 
@@ -9,6 +9,7 @@ WriteMakefile(
     AUTHOR       => 'Guillaume Rousse <grousse@cpan.org>',
     PREREQ_PM    => {
 	'WWW::Mechanize' => 0.5,
-	'Getopt::Long'   => 0
+	'Getopt::Long'   => 0,
+	'Test::URI'      => 0
     }
 );

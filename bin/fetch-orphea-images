@@ -8,15 +8,20 @@ use strict;
 my %opts;
 my $base = 'image';
 my $limit = 100;
-my ($user, $pass);
+my ($user, $pass, $server);
 GetOptions(
-    "limit=i" => \$limit,
-    "base=s"  => \$base,
-    "user=s"  => \$user,
-    "pass=s"  => \$pass
+    "limit=i"  => \$limit,
+    "base=s"   => \$base,
+    "user=s"   => \$user,
+    "pass=s"   => \$pass,
+    "server=s" => \$server
 );
 
-my $agent = WWW::Orphea->new(user => $user, pass => $pass);
+my $agent = WWW::Orphea->new(
+    server => $server,
+    user   => $user,
+    pass   => $pass
+);
 
 while (my $item = <>) {
     chomp $item;
