@@ -1,4 +1,4 @@
-# $Id: Image.pm,v 1.2 2004/04/05 13:57:31 guillaume Exp $
+# $Id: Image.pm,v 1.3 2004/11/03 10:25:40 rousse Exp $
 package WWW::Orphea::Image;
 
 =head1 NAME
@@ -64,6 +64,10 @@ Optional parameters:
 =item file => I<$file>
 
 Use $file as file name.
+
+=item dir => I<$directory>
+
+Use $directory as a directory path to save the file.  If only 'file' is specified, it will be saved in a path relative to the current working directory.
 
 =item base => I<$base>
 

@@ -1,4 +1,4 @@
-# $Id: Orphea.pm,v 1.6 2004/04/08 08:01:29 guillaume Exp $
+# $Id: Orphea.pm,v 1.7 2004/11/03 10:26:06 rousse Exp $
 package WWW::Orphea;
 
 =head1 NAME
@@ -7,7 +7,7 @@ WWW::Orphea - Orphea Agent
 
 =head1 VERSION
 
-Version 0.3
+Version 0.3.1
 
 =head1 DESCRIPTION
 
@@ -39,7 +39,7 @@ L<WWW::Google::Images>, itself inspired from L<WWW::Google::Groups>.
 use WWW::Mechanize;
 use WWW::Orphea::SearchResult;
 use strict;
-our $VERSION = '0.3';
+our $VERSION = '0.3.1';
 
 =head1 Constructor
 
