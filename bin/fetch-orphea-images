@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+# $Id: fetch-orphea-images,v 1.2 2004/04/05 13:57:31 guillaume Exp $
+
+use Getopt::Long;
+use WWW::Orphea;
+use strict;
+
+my %opts;
+my $base = 'image';
+my $limit = 100;
+my ($user, $pass);
+GetOptions(
+    "limit=i" => \$limit,
+    "base=s"  => \$base,
+    "user=s"  => \$user,
+    "pass=s"  => \$pass
+);
+
+my $agent = WWW::Orphea->new(user => $user, pass => $pass);
+
+while (my $item = <>) {
+    chomp $item;
+    my $result = $agent->search($item, limit => $limit);
+    if ($result) {
+	mkdir($item);
+	$result->save_all_contents(dir => $item, base => $base);
+    }
+}

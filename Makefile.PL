@@ -1,0 +1,14 @@
+# $Id: Makefile.PL,v 1.2 2004/04/05 13:57:31 guillaume Exp $
+
+use ExtUtils::MakeMaker;
+
+WriteMakefile(
+    NAME         => 'WWW::Orphea',
+    VERSION_FROM => 'lib/WWW/Orphea.pm',
+    EXE_FILES    => [ 'bin/fetch-orphea-images' ],
+    AUTHOR       => 'Guillaume Rousse <grousse@cpan.org>',
+    PREREQ_PM    => {
+	'WWW::Mechanize' => 0.5,
+	'Getopt::Long'   => 0
+    }
+);

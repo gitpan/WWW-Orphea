@@ -1,0 +1,51 @@
+WWW::Orphea
+===========
+
+NAME
+
+    WWW::Orphea
+
+DESCRIPTION
+
+   This module may be used search images on an Orphea web server, a Digital
+   Asset Management (DAM) software suite published by Algoba Systems
+   (http://www.algoba.com/public/orphea.pgi). Its interface is adapted from
+   WWW::Google::Images, itself inspired from WWW::Google::Groups.
+
+HOW DO I INSTALL IT?
+
+    To install this module type the following:
+
+    tar xvzf WWW::Orphea-X.XX.tar.gz
+    cd WWW::Orphea-X.XX
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+    Where X.XX is the version number of the module which you are installing.
+
+WHERE IS THE DOCUMENTATION?
+
+    All of the documentation is currently in POD format in the Images.pm
+    file. If you install the module using the standard method you should  be
+    able to read it by typing
+
+    perldoc WWW::Orphea
+
+    at a comand prompt.
+
+LATEST VERSION
+
+    The latest version of this module will always be available from CPAN.
+
+COPYRIGHT AND LICENSE
+
+    Copyright (C) 2004, INRIA.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+AUTHOR
+
+    Guillaume Rousse <grousse@cpan.org>
