@@ -1,15 +1,12 @@
 #!/usr/bin/perl
-# $Id: test.pl,v 1.3 2004/04/05 13:59:50 guillaume Exp $
-use Test::More tests => 15;
+# $Id: 01run.t,v 1.4 2005/05/02 15:18:32 rousse Exp $
+use Test::More tests => 14;
 use Test::URI;
 use File::Temp qw/tempdir/;
+use WWW::Orphea;
 use strict;
 
 my $query = 'Musa';
-
-BEGIN {
-    use_ok 'WWW::Orphea';
-}
 
 # skip all other tests if the network is not available
 SKIP: {
