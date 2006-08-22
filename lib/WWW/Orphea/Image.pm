@@ -1,4 +1,4 @@
-# $Id: Image.pm,v 1.3 2004/11/03 10:25:40 rousse Exp $
+# $Id: Image.pm,v 1.5 2006/08/22 13:04:01 rousse Exp $
 package WWW::Orphea::Image;
 
 =head1 NAME
@@ -19,9 +19,9 @@ sub new {
     my ($class, $agent, $content, $legend) = @_;
 
     my $self = bless {
-	_agent   => $agent,
-	_content => $content,
-	_legend  => $legend,
+        _agent   => $agent,
+        _content => $content,
+        _legend  => $legend,
     }, $class;
 
     return $self;
@@ -97,19 +97,19 @@ sub _get_file {
 
     my $file;
     if ($args{file}) {
-	$file = $args{file};
+        $file = $args{file};
     } elsif ($args{base}) {
-	$file = $args{base} . '.jpg';
+        $file = $args{base} . '.jpg';
     } else {
-	$url =~ /([^\/]+)$/;
-	$file = $1;
+        $url =~ /([^\/]+)$/;
+        $file = $1;
     }
 
     my $dir;
     if ($args{dir}) {
-	$dir = $args{dir};
+        $dir = $args{dir};
     } else {
-	$dir = '.';
+        $dir = '.';
     }
 
     return $dir . '/' . $file;
@@ -117,7 +117,7 @@ sub _get_file {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2004, INRIA.
+Copyright (C) 2004-2006, INRIA.
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 

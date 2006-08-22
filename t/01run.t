@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: 01run.t,v 1.4 2005/05/02 15:18:32 rousse Exp $
+# $Id: 01run.t,v 1.7 2006/08/22 13:06:04 rousse Exp $
 use Test::More tests => 14;
 use Test::URI;
 use File::Temp qw/tempdir/;
@@ -13,9 +13,9 @@ SKIP: {
     skip "Web does not seem to work", 14 unless web_ok();
 
     my $agent = WWW::Orphea->new(
-	server => 'http://www.ird.fr/indigo',
-	user   => '__GUEST',
-	pass   => '__GUEST'
+        server => 'http://www.ird.fr/indigo',
+        user   => '__GUEST',
+        pass   => '__GUEST'
     );
     isa_ok($agent, 'WWW::Orphea', 'constructor returns a WWW::Orphea object');
 
@@ -45,7 +45,6 @@ SKIP: {
 
     $image = $result->next();
     ok(! defined $image, 'search limit < 20 works');
-    print $image;
 
     my $count;
 
@@ -70,11 +69,11 @@ sub get_max_result_count {
 
     $test_agent->get('http://www.ird.fr/indigo');
     $test_agent->submit_form(
-	 form_number => 1,
-	 fields      => {
-	     UserName => '__GUEST',
-	     PassWord => '__GUEST'
-	 }
+        form_number => 1,
+        fields      => {
+            UserName => '__GUEST',
+            PassWord => '__GUEST'
+        }
     );
 
     my $content;
@@ -96,6 +95,7 @@ sub get_max_result_count {
 
     $form->value('userrequest', $query);
     $test_agent->request($form->click());
+    $test_agent->submit();
 
     $test_agent->content() =~ m/ramène (\d+) photos/;
     return $1;

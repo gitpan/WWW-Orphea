@@ -1,7 +1,10 @@
-# $Id: Makefile.PL,v 1.4 2005/05/02 16:04:21 rousse Exp $
+# $Id: Makefile.PL,v 1.6 2006/08/22 11:23:40 rousse Exp $
 
 use ExtUtils::MakeMaker;
-use ExtUtils::MakeMaker::Coverage;
+eval {
+    require ExtUtils::MakeMaker::Coverage;
+    import ExtUtils::MakeMaker::Coverage;
+};
 
 WriteMakefile(
     NAME          => 'WWW::Orphea',
@@ -10,16 +13,16 @@ WriteMakefile(
     AUTHOR        => 'Guillaume Rousse <grousse@cpan.org>',
     EXE_FILES     => [ 'bin/fetch-orphea-images' ],
     PREREQ_PM     => {
-	'WWW::Mechanize' => 0.5,
-	'Getopt::Long'   => 0,
-	'Test::More'     => 0,
-	'Test::URI'      => 0,
+        'WWW::Mechanize' => 0.5,
+        'Getopt::Long'   => 0,
+        'Test::More'     => 0,
+        'Test::URI'      => 0,
     },
     dist           => {
-	COMPRESS => 'gzip -9f',
-	SUFFIX   => 'gz',
+        COMPRESS => 'gzip -9f',
+        SUFFIX   => 'gz',
     },
     clean          => {
-	FILES => 'WWW-Orphea-*'
+        FILES => 'WWW-Orphea-*'
     },
 );

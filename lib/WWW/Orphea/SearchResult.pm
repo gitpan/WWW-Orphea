@@ -1,4 +1,4 @@
-# $Id: SearchResult.pm,v 1.2 2004/04/05 13:57:31 guillaume Exp $
+# $Id: SearchResult.pm,v 1.4 2006/08/22 13:04:01 rousse Exp $
 package WWW::Orphea::SearchResult;
 
 =head1 NAME
@@ -22,8 +22,8 @@ sub new {
     my ($class, $agent, @images) = @_;
 
     my $self = bless {
-	_agent  => $agent,
-	_images => \@images
+        _agent  => $agent,
+        _images => \@images
     }, $class;
 
     return $self;
@@ -42,9 +42,9 @@ sub next {
     my $image = shift @{$self->{_images}};
     return unless $image;
     return WWW::Orphea::Image->new(
-	$self->{_agent},
-	$image->{content},
-	$image->{legend}
+        $self->{_agent},
+        $image->{content},
+        $image->{legend}
     );
 }
 
@@ -63,18 +63,18 @@ sub save_all_contents {
 
     my $count;
     while (my $image = $self->next()) {
-	$count++;
-	$image->save_content(
-	    dir  => $args{dir} ? $args{dir} : undef,
-	    file => $args{file} ? $args{file} . $count : undef,
-	    base => $args{base} ? $args{base} . $count : undef,
-	);
+        $count++;
+        $image->save_content(
+            dir  => $args{dir} ? $args{dir} : undef,
+            file => $args{file} ? $args{file} . $count : undef,
+            base => $args{base} ? $args{base} . $count : undef,
+        );
     }
 }
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2004, INRIA.
+Copyright (C) 2004-2006, INRIA.
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 

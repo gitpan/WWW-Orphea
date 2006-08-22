@@ -1,4 +1,4 @@
-# $Id: Orphea.pm,v 1.8 2005/05/23 17:59:57 rousse Exp $
+# $Id: Orphea.pm,v 1.15 2006/08/22 13:00:51 rousse Exp $
 package WWW::Orphea;
 
 =head1 NAME
@@ -7,7 +7,7 @@ WWW::Orphea - Orphea Agent
 
 =head1 VERSION
 
-Version 0.3.2
+Version 0.3.3
 
 =head1 DESCRIPTION
 
@@ -21,17 +21,17 @@ L<WWW::Google::Images>, itself inspired from L<WWW::Google::Groups>.
     use WWW::Orphea;
 
     $agent = WWW::Orphea->new(
-	server => 'my.orphea.server',
-	proxy  => 'my.proxy.server:port',
+        server => 'my.orphea.server',
+        proxy  => 'my.proxy.server:port',
     );
 
     $result = $agent->search('flowers', limit => 10);
 
     while ($image = $result->next()) {
-	$count++;
-	print $image->content_url();
-	print $image->legend();
-	print $image->save_content( base => 'image' . $count);
+        $count++;
+        print $image->content_url();
+        print $image->legend();
+        print $image->save_content( base => 'image' . $count);
     }
 
 =cut
@@ -39,7 +39,7 @@ L<WWW::Google::Images>, itself inspired from L<WWW::Google::Groups>.
 use WWW::Mechanize;
 use WWW::Orphea::SearchResult;
 use strict;
-our $VERSION = '0.3.2';
+our $VERSION = '0.3.3';
 
 =head1 Constructor
 
@@ -67,34 +67,34 @@ sub new {
     my ($class, %arg) = @_;
 
     foreach my $key (qw(server pass user)) {
-	die "No $key defined, aborting" unless $arg{$key};
+        die "No $key defined, aborting" unless $arg{$key};
     }
 
     foreach my $key (qw(server proxy)) {
-	next unless $arg{$key};
-	$arg{$key} = 'http://' . $arg{$key} unless $arg{$key} =~ m|^\w+?://|;
-	$arg{$key} = $arg{$key} . '/' unless $arg{$key} =~ m|/$|;
+        next unless $arg{$key};
+        $arg{$key} = 'http://' . $arg{$key} unless $arg{$key} =~ m|^\w+?://|;
+        $arg{$key} = $arg{$key} . '/' unless $arg{$key} =~ m|/$|;
     }
 
     my $a = WWW::Mechanize->new(onwarn => undef, onerror => undef);
     $a->proxy(['http'], $arg{proxy}) if $arg{proxy};
 
     my $self = bless {
-	_user   => $arg{user},
-	_pass   => $arg{pass},
-	_server => $arg{server},
-	_proxy  => $arg{proxy},
-	_agent  => $a,
+        _user   => $arg{user},
+        _pass   => $arg{pass},
+        _server => $arg{server},
+        _proxy  => $arg{proxy},
+        _agent  => $a,
     }, $class;
 
     $self->{_agent}->get($self->{_server});
 
     $self->{_agent}->submit_form(
-	 form_number => 1,
-	 fields      => {
-	     UserName => $self->{_user},
-	     PassWord => $self->{_pass},
-	 }
+        form_number => 1,
+        fields      => {
+            UserName => $self->{_user},
+            PassWord => $self->{_pass},
+        }
     );
 
     $self->{_agent}->content() =~ /src="loading_header.html\?UNID=(\w+)&LGID=(\w+)&([^"]+)"/;
@@ -140,15 +140,16 @@ sub search {
 
     $self->{_form}->value('userrequest', $query);
     $self->{_agent}->request($self->{_form}->click());
+    $self->{_agent}->submit();
 
     my @images;
     my $page = 1;
 
     LOOP: {
-	do {
-	    push(@images, $self->_extract_images($arg{limit} ? $arg{limit} - @images : 0));
-	    last if $arg{limit} && @images >= $arg{limit};
-	} while ($self->_next_page(++$page));
+        do {
+            push(@images, $self->_extract_images($arg{limit} ? $arg{limit} - @images : 0));
+            last if $arg{limit} && @images >= $arg{limit};
+        } while ($self->_next_page(++$page));
     }
 
     return WWW::Orphea::SearchResult->new($self->{_agent}, @images);
@@ -170,14 +171,14 @@ sub _extract_images {
 
     my @images;
     my $page = $self->{_agent}->content();
-    my @legends  = $page =~ m/<TD class="photoslistsubline1">([^<]+)<\/TD>/g;
-    my @contents = $page =~ m/<img src="\/thu_orphea\/([\d_]+)\.(?:thw|THW)"/g;
+    my @legends  = $page =~ m/<TD class="photoslistsubline1">([^<]+)<\/TD>/go;
+    my @contents = $page =~ m/<img src="thu_orphea\/([\d_]+)\.(?:thw|THW)"/go;
 
     for (my $i = 0; $i <= $#contents; $i++) {
-	last if $limit && @images >= $limit;
-	$contents[$i] = $self->{_server} . 'bro_orphea/' . $contents[$i] . '.bro';
-	$legends[$i]  =~ s/\w+$//;
-	push(@images, { content => $contents[$i], legend => $legends[$i] });
+        last if $limit && @images >= $limit;
+        $contents[$i] = $self->{_server} . 'bro_orphea/' . $contents[$i] . '.BRO';
+        $legends[$i]  =~ s/\w+$//;
+        push(@images, { content => $contents[$i], legend => $legends[$i] });
     }
 
     return @images;
@@ -185,7 +186,7 @@ sub _extract_images {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2004, INRIA.
+Copyright (C) 2004-2006 INRIA.
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
